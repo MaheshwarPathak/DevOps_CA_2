@@ -12,6 +12,6 @@ allow {
 
 valid_memory {
   endswith(input.memory, "Mi")
-  value := to_number(replace(input.memory, "Mi", ""))
+  value = to_number(replace(input.memory, "Mi", ""))
   value >= 512
 }
