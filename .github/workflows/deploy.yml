@@ -28,16 +28,15 @@ jobs:
         run: |
           docker run --rm -v "${{ github.workspace }}:/workspace" -w /workspace openpolicyagent/opa eval -i /workspace/deployment.json -d /workspace/policy -f pretty 'data.policy.allow'
 
-      - name: Set up Snyk
-        uses: snyk/actions/setup@v3
-        with:
-          token: ${{ secrets.SNYK_TOKEN }}
-
       - name: Run Snyk dependency scan
-        run: snyk test --all-projects
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        run: npx snyk test --all-projects
 
       - name: Build Docker image
         run: docker build -t ci-cd-app:latest .
 
       - name: Run Snyk container scan
-        run: snyk container test ci-cd-app:latest --file=Dockerfile
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        run: npx snyk container test ci-cd-app:latest --file=Dockerfile
