@@ -1,6 +1,6 @@
 package policy
 
-allow {
+allow = true {
   input.app == "inventory-service"
   input.cpu != ""
   input.memory != ""
@@ -10,5 +10,6 @@ allow {
 
 valid_memory {
   endswith(input.memory, "Mi")
-  to_number(replace(input.memory, "Mi", "")) >= 512
+  num := to_number(replace(input.memory, "Mi", ""))
+  num >= 512
 }
