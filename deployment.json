@@ -1,0 +1,6 @@
+{
+  "app": "inventory-service",
+  "cpu": "500m",
+  "memory": "512Mi",
+  "environment": "production"
+}
